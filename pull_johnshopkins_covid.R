@@ -77,6 +77,11 @@ list(confirmed_colo,
             fill = category),
         stat = "identity",
         alpha = .5,
-        position = position_dodge(width = 0)
-    )
+        position = position_dodge(width = 0, preserve = "single")
+    ) +
+    scale_x_date() +
+    scale_fill_brewer(palette = "Dark2", name = NULL) +
+    theme_minimal() +
+    labs(title = "COVID-19 Daily New Cases in Colorado",
+         x = NULL, y = "New Cases")
 
