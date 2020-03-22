@@ -1,6 +1,7 @@
 library(tidyverse)
 library(anytime)
 library(janitor)
+library(glue)
 
 jh_melt_format <-
     function(dat) {
@@ -41,12 +42,13 @@ recovered <-
 
     filter(cases > 0)
 
-
+# ps <- "Washington"
+ps <- "Colorado"
 
 (
     confirmed_colo <-
         confirmed %>%
-        filter(province_state == "Colorado") %>%
+        filter(province_state == ps) %>%
         mutate(new_cases = new_cases(cases),
                category = "Cases")
 )
@@ -54,14 +56,14 @@ recovered <-
 (
     deaths_colo <-
         deaths %>%
-        filter(province_state == "Colorado") %>%
+        filter(province_state == ps) %>%
         mutate(new_cases = new_cases(cases),
                category = "Deaths")
 )
 
 (
     recovered_colo <- recovered %>%
-        filter(province_state == "Colorado") %>%
+        filter(province_state == ps) %>%
         mutate(new_cases = new_cases(cases),
                category = "Recoveries")
 )
@@ -82,6 +84,6 @@ list(confirmed_colo,
     scale_x_date() +
     scale_fill_brewer(palette = "Dark2", name = NULL) +
     theme_minimal() +
-    labs(title = "COVID-19 Daily New Cases in Colorado",
+    labs(title = glue("COVID-19 Daily New Cases in {ps}"),
          x = NULL, y = "New Cases")
 
